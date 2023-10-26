@@ -28,12 +28,13 @@ To use this script, execute it from the command line with the following command:
 
 **Requirements**
 
-[fastqc: Quality control tool for sequencing data.](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
-[samtools: Utilities for manipulating sequence data in SAM and BAM formats.](https://www.htslib.org/)
-[bwa: Burrows-Wheeler Aligner for read alignment.](https://bio-bwa.sourceforge.net/)
-[umi_tools: A tool for working with UMIs.](https://umi-tools.readthedocs.io/en/latest/QUICK_START.html)
-[freebayes: A Bayesian genetic variant detector.](https://github.com/freebayes/freebayes)
-python3: Python for data manipulation.
+- [fastqc: Quality control tool for sequencing data.](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
+- [samtools: Utilities for manipulating sequence data in SAM and BAM formats.](https://www.htslib.org/)
+- [bwa: Burrows-Wheeler Aligner for read alignment.](https://bio-bwa.sourceforge.net/)
+- [umi_tools: A tool for working with UMIs.](https://umi-tools.readthedocs.io/en/latest/QUICK_START.html)
+- [freebayes: A Bayesian genetic variant detector.](https://github.com/freebayes/freebayes)
+- python3: Python for data manipulation.
+
 
 **Output**
 
