@@ -17,11 +17,17 @@ To use this script, execute it from the command line with the following command:
 **Command-line Arguments**
 
 -R1: Path to the first input read file (Read 1).
+
 -R2: Path to the second input read file (Read 2).
+
 -Ref_name: Path to the reference genome or sequence file.
+
 -sample_name: Name to be used for the output files (optional).
+
 -threads: Number of threads for parallel processing (optional, default is 4).
+
 -umi: UMI (Unique Molecular Identifier) regex barcode pattern for read extraction (optional, default is a '(?P<umi_1>.{10})T{2}.*').
+	
 
 
 **Requirements**
