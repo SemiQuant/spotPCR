@@ -6,8 +6,8 @@ while [[ $# -gt 0 ]]; do
   case $key in
     -R1)
       R1="$2"
-      shift # past argument
-      shift # past value
+      shift
+      shift
       ;;
     -R2)
       R2="$2"
@@ -68,8 +68,8 @@ if [ -z "$sample_name" ]; then
 fi
 
 
-# fastqc -q -t "$threads" "$R1"
-# fastqc -q -t "$threads" "$R2"
+fastqc -q -t "$threads" "$R1"
+fastqc -q -t "$threads" "$R2"
 
 samtools faidx "$Ref_name"
 bwa index "$Ref_name"
