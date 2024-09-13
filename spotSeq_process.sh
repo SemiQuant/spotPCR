@@ -15,6 +15,7 @@ done
 
 # Set defaults
 bc="(?P<umi_1>.{10})T{2}.*"
+# bc="(?P<umi_1>[AG]{1}.[CT]{1}.[ATCG]{3}.[AG]{1}.[CT]{1}.[ATCG]{3}.T{2}.*)"
 umi="${umi:-$bc}"
 
 # Check if required files exist
@@ -89,6 +90,7 @@ def vcf_to_tsv(vcf_input):
         [
             (
                 record.POS,
+                record.CHROM,
                 record.REF,
                 record.ALT[0] if record.ALT else "",
                 record.INFO.get("DP", 0),
@@ -99,7 +101,7 @@ def vcf_to_tsv(vcf_input):
             )
             for record in vcf_reader
         ],
-        columns=["POS", "REF", "ALT", "Depth", "Alt Depth", "AC", "Proportion Depth", "QUAL"]
+        columns=["POS", "CHROM", "REF", "ALT", "Depth", "Alt Depth", "AC", "Proportion Depth", "QUAL"]
     )
     df.to_csv(output_file, sep="\t", index=False)
     print(f"Saved {vcf_input} as {output_file}")
@@ -109,7 +111,7 @@ vcf_to_tsv("'"$vcf_file"'")
 vcf_to_tsv("'"$vcf_orig_file"'")
 '
 
-bam="${sample_name}_sorted.bam"
+bam="${sample_name}_deduplicated_reads.bam"
 REGIONS=$(samtools view -H "$bam" | grep "@SQ" | cut -f 2 | cut -d ':' -f 2)
 
 for REGION in $REGIONS; do
@@ -117,8 +119,21 @@ for REGION in $REGIONS; do
         DEPTH_VALUES=$(samtools depth -a -r "$REGION" "$BAM_FILE" | cut -f3)
         AVG_DEPTH=$(echo "$DEPTH_VALUES" | awk '{ total += $1; count++ } END { print total/count }')
         echo "Bam file $BAM_FILE Region $REGION: Average Depth = $AVG_DEPTH" >> "${sample_name}.stats.txt"
+        umi_tools count --per-gene --gene-tag=pncA --per-cell -I $BAM_FILE -S "${sample_name}_${REGION}.counts.tsv"
     done
 done
 
+# bam="${sample_name}_deduplicated_reads.bam"
+
+# umi_tools count --extract-umi-method=read_id --umi-separator="_" --per-contig --per-gene --wide-format-cell-counts -I "$bam" -S "${sample_name}.counts.tsv"
+# samtools idxstats "$bam" | awk '{OFS="\t"; if($1 != "*") print $1, $3}' > "${sample_name}.total_counts.txt"
+
+# # Combine UMI counts and total counts
+# echo -e "contig\tumi_count\ttotal_reads" > "${sample_name}combined_counts.tsv"
+# join -t $'\t' <(sort "${sample_name}.counts.tsv") <(sort "${sample_name}.total_counts.txt") >> "${sample_name}combined_counts.tsv"
+
 # Cleanup
-rm "${sample_name}.sam" "${R2/.f*/.filt.fq}" "${R1/.f*/.filt.fq}"
+rm "${sample_name}.sam" "${R2/.f*/.filt.fq}" "${R1/.f*/.filt.fq}" 
+# "${sample_name}.counts.tsv" "${sample_name}.total_counts.txt"
+
+exit 0
