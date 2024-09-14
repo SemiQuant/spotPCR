@@ -1,0 +1,4 @@
+Bam file example_sorted.bam Region pncA: Average Depth = 48859.2
+Bam file example_deduplicated_reads.bam Region pncA: Average Depth = 2146.62
+Bam file example_sorted.bam Region gyrA: Average Depth = 16502.6
+Bam file example_deduplicated_reads.bam Region gyrA: Average Depth = 1421.82

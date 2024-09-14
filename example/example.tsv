@@ -1,0 +1,6 @@
+POS	CHROM	REF	ALT	Depth	Alt Depth	AC	Proportion Depth	QUAL
+2	gyrA	C	T	20	14	1	0.7	230.07
+3	gyrA	A	T	22	2	0	0.09	7.56441e-15
+136	gyrA	G	C	47	4	0	0.09	2.95933e-14
+300	gyrA	G	T	47	17	0	0.36	0.0
+384	gyrA	G	T	2156	141	0	0.07	0.0
