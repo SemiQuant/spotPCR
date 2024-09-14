@@ -64,6 +64,25 @@ samtools sort -@ "$threads" "${sample_name}.sam" -o "${sample_name}_sorted.bam"
 samtools index "${sample_name}_sorted.bam"
 samtools flagstat "${sample_name}_sorted.bam" > "${sample_name}.flagstat.txt"
 
+
+umi_tools group --paired --per-gene --per-contig -I "${sample_name}_sorted.bam" --group-out="${sample_name}_grouped.tsv"
+# 5 or more umi per read
+awk -F'\t' '$6 >= 5 {print $4, $5, $6}' "${sample_name}_grouped.tsv" | sort -u | awk '{sum[$1] += $3} END {for (gene in sum) print gene, sum[gene]}' | sort -k2,2nr > "${sample_name}_usable_umis_reads.tsv"
+samtools idxstats "${sample_name}_sorted.bam" | awk '{OFS="\t"; if($1 != "*") print $1, $3}' > "${sample_name}_total_counts.txt"
+
+awk 'BEGIN {OFS="\t"; print "Gene", "Usable_UMIs_Reads", "Total_Counts", "Percentage"}
+     NR==FNR {counts[$1]=$2; next}
+     {
+       if ($1 in counts) {
+         percentage = (counts[$1] > 0) ? sprintf("%.0f", ($2 / counts[$1] * 100)) : "0"
+         print $1, $2, counts[$1], percentage
+       }
+       else 
+         print $1, $2, "0", "N/A"
+     }' "${sample_name}_total_counts.txt" "${sample_name}_usable_umis_reads.tsv" > "${sample_name}_usable_umis_stats.tsv"
+
+
+
 umi_tools dedup \
   --stdin="${sample_name}_sorted.bam" \
   --paired \
@@ -133,7 +152,7 @@ done
 # join -t $'\t' <(sort "${sample_name}.counts.tsv") <(sort "${sample_name}.total_counts.txt") >> "${sample_name}combined_counts.tsv"
 
 # Cleanup
-rm "${sample_name}.sam" "${R2/.f*/.filt.fq}" "${R1/.f*/.filt.fq}" 
+rm "${sample_name}.sam" "${R2/.f*/.filt.fq}" "${R1/.f*/.filt.fq}" "${sample_name}_usable_umis_reads.tsv" "${sample_name}_total_counts.txt"
 # "${sample_name}.counts.tsv" "${sample_name}.total_counts.txt"
 
 exit 0

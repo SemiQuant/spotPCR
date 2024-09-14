@@ -5,7 +5,7 @@ This Bash script performs UMI identification, read alignment, deduplication, and
 To use this script, execute it from the command line with the following command:
 
 ```
-./spotSeq_process.sh \
+./spotPCR_process.sh \
   -R1 <Read1.fastq> \
   -R2 <Read2.fastq> \
   -Ref_name <Reference.fasta> \
@@ -34,6 +34,8 @@ To use this script, execute it from the command line with the following command:
 - [umi_tools: A tool for working with UMIs.](https://umi-tools.readthedocs.io/en/latest/QUICK_START.html)
 - [freebayes: A Bayesian genetic variant detector.](https://github.com/freebayes/freebayes)
 - python3: Python for data manipulation.
+    - pyVCF
+    - pandas
 
 
 **Output**
