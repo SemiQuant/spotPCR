@@ -41,3 +41,16 @@ To use this script, execute it from the command line with the following command:
 **Output**
 
 The script generates various output files, including aligned BAM files, a VCF file containing variant calls, and a statistics file for depth analysis.
+
+
+**Run Example**
+
+./spotPCR_process.sh \
+  -R1 ./example/ex_R1_001.fastq.gz \
+  -R2 ./example/ex_R2_001.fastq.gz \
+  -Ref_name ./reference/ref.fasta \
+  -sample_name example \
+  -threads 4
+```
+
+The expected outputs are in the example folder for comparison.
