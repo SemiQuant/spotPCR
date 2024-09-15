@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # Command line inputs
 while [[ $# -gt 0 ]]; do
   case $1 in
@@ -9,7 +8,11 @@ while [[ $# -gt 0 ]]; do
     -sample_name) sample_name="$2"; shift 2 ;;
     -threads) threads="$2"; shift 2 ;;
     -umi) umi="$2"; shift 2 ;;
-    -fqc) fqc="T"; shift 2 ;;
+    -fqc) fqc="true"; shift ;;
+    -h|--help)
+      echo "Usage: $0 [-R1 <R1_file>] [-R2 <R2_file>] [-Ref_name <reference_name>] [-sample_name <sample_name>] [-threads <num_threads>] [-umi <umi_value>] [-fqc]"
+      exit 0
+      ;;
     *) echo "Unknown option: $1"; exit 1 ;;
   esac
 done
@@ -34,7 +37,7 @@ threads="${threads:-4}"
 sample_name="${sample_name:-${R1/_R1*/}}"
 
 # Run tools
-if [ $fqc == "T" ]
+if [ "$fqc" = "true" ]
 then
   fastqc -q -t "$threads" "$R1"
   fastqc -q -t "$threads" "$R2"
