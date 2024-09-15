@@ -48,7 +48,7 @@ The script generates various output files, including aligned BAM files, a VCF fi
 ./spotPCR_process.sh \
   -R1 ./example/ex_R1_001.fastq.gz \
   -R2 ./example/ex_R2_001.fastq.gz \
-  -Ref_name ./reference/ref.fasta \
+  -Ref_name ./ref/reference.fasta \
   -sample_name example \
   -threads 4
 ```
