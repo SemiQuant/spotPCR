@@ -9,6 +9,7 @@ while [[ $# -gt 0 ]]; do
     -sample_name) sample_name="$2"; shift 2 ;;
     -threads) threads="$2"; shift 2 ;;
     -umi) umi="$2"; shift 2 ;;
+    -fqc) fqc="T"; shift 2 ;;
     *) echo "Unknown option: $1"; exit 1 ;;
   esac
 done
@@ -33,8 +34,11 @@ threads="${threads:-4}"
 sample_name="${sample_name:-${R1/_R1*/}}"
 
 # Run tools
-fastqc -q -t "$threads" "$R1"
-fastqc -q -t "$threads" "$R2"
+if [ $fqc == "T" ]
+then
+  fastqc -q -t "$threads" "$R1"
+  fastqc -q -t "$threads" "$R2"
+fi
 
 # these dont rerun unle
 # Check if samtools index exists, if not, run samtools faidx
@@ -181,7 +185,8 @@ done
 
 
 # Cleanup
-rm "${sample_name}.sam" "${R2/.f*/.filt.fq}" "${R1/.f*/.filt.fq}" "${sample_name}_usable_umis_reads.tsv" "${sample_name}_total_counts.txt"
+rm "${sample_name}.sam" "${R2/.f*/.filt.fq}" "${R1/.f*/.filt.fq}" 
+#"${sample_name}_usable_umis_reads.tsv" "${sample_name}_total_counts.txt"
 # "${sample_name}.counts.tsv" "${sample_name}.total_counts.txt"
 
 exit 0
