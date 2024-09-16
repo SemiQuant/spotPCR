@@ -14,6 +14,12 @@ To use this script, execute it from the command line with the following command:
   -umi <UMI_Barcode_Pattern>
 ```
 
+```
+./count_stats.py \
+  --directory <directory> \
+  --min_umi_count 50
+```
+
 **Command-line Arguments**
 
 | Flag         | Description                                                                                                            |
@@ -24,6 +30,7 @@ To use this script, execute it from the command line with the following command:
 | -sample_name | Name to be used for the output files (optional).                                                                       |
 | -threads     | Number of threads for parallel processing (optional, default is 4).                                                    |
 | -umi         | UMI (Unique Molecular Identifier) regex barcode pattern for read extraction (optional, default is a '(?P.{10})T{2}.*') |
+| -fqc         | Run fastqc on input files?                                                                                             |
 
 
 **Requirements**
@@ -36,6 +43,8 @@ To use this script, execute it from the command line with the following command:
 - python3: Python for data manipulation.
     - pyVCF
     - pandas
+    – pysam
+    – numpy
 
 
 **Output**

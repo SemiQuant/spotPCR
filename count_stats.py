@@ -8,8 +8,13 @@ import os
 import argparse
 
 parser = argparse.ArgumentParser(description="Inputs")
-parser.add_argument("directory", help="Path to the directory to process")
-parser.add_argument("min_umi_count", help="min_umi_count")
+parser.add_argument("-d", "--directory", 
+                    default=os.getcwd(),
+                    help="Path to the directory to process (default: current directory)")
+parser.add_argument("-u", "--min_umi_count", 
+                    type=int, 
+                    default=50,
+                    help="Minimum UMI count (default: 50)")
 args = parser.parse_args()
 
 bam_directory = args.directory
