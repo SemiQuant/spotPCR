@@ -14,6 +14,21 @@ To use this script, execute it from the command line with the following command:
   -umi <UMI_Barcode_Pattern>
 ```
 
+If you would like to parellelize it, this would use 4*3=12 threads total.
+ls *_R1_001.fastq.gz | parallel -j 4 '
+    R1={}
+    R2="${R1/_R1_001.fastq.gz/_R2_001.fastq.gz}"
+    base="${R1/_R1_001.fastq.gz/}"
+    ./spotPCR_process.sh \
+        -R1 "$R1" \
+        -R2 "$R2" \
+        -Ref_name "./ref/pncA.fasta" \
+        -sample_name "$base" \
+        -threads 3
+'
+
+
+This is to be run on the output folder of the *spotPCR_process* and will provide additional stats for the entire sample set.
 ```
 ./count_stats.py \
   --directory <directory> \
