@@ -55,11 +55,11 @@ This is to be run on the output folder of the *spotPCR_process* and will provide
 - [bwa: Burrows-Wheeler Aligner for read alignment.](https://bio-bwa.sourceforge.net/)
 - [umi_tools: A tool for working with UMIs.](https://umi-tools.readthedocs.io/en/latest/QUICK_START.html)
 - [freebayes: A Bayesian genetic variant detector.](https://github.com/freebayes/freebayes)
-- python3: Python for data manipulation.
+- python3: Python for data manipulation:
     - pyVCF
     - pandas
-    – pysam
-    – numpy
+    - pysam
+    - numpy
 
 
 **Output**
